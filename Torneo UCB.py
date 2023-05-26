@@ -1,58 +1,74 @@
 import random
+import time
+
+def ResultadosSemifinal(A,B,C,D):
+    golesDeA = random.randint(0,5)
+    golesDeB = random.randint(0,5)
+    golesDeC = random.randint(0,5)
+    golesDeD = random.randint(0,5)
+    print("Resultados de semifinal:")
+    print(A, golesDeA, "-", golesDeB, B)
+    time.sleep(2)
+    X = A
+    Z = B
+    golesX = golesDeA
+    golesZ = golesDeB
+    ganador = Penales(X,Z,golesX,golesZ)
+    ganador1Semifinal = ganador
+    print("Ganó ", ganador1Semifinal)
+    print("------------------------------------------------------")
+    time.sleep(2)
+    print(C, golesDeC, "-", golesDeD, D)
+    X = C
+    Z = D
+    golesX = golesDeC
+    golesZ = golesDeD
+    ganador = Penales(X,Z,golesX,golesZ)
+    ganador2Semifinal = ganador
+    time.sleep(2)
+    print("Ganó ", ganador2Semifinal)
+    time.sleep(2)
+    print("GRAN FINAL:")
+    print(ganador1Semifinal, "vs", ganador2Semifinal)
+    time.sleep(2)
+    X = ganador1Semifinal
+    Z = ganador2Semifinal
+    golesX = random.randint(0,5)
+    golesZ = random.randint(0,5)
+    print(X, golesX, "-", golesZ, Z)
+    ganador = Penales(X,Z,golesX,golesZ)
+    print("El ganador es", ganador)
+    time.sleep(2)
 
 
-equipos = ['IngenieriaEnSistemas', 'IngenieriaMecatronica', 'Medicina', 'IngenieriaCivil', 'IngenieriaBiomedica', 'IngenieriaComercial', 'Arquitectura', 'Derecho']
+def Penales(X,Z,golesX,golesZ):
+    if golesX == golesZ:
+        print("Hay un empate entre el equipo de", X, "y el equipo de", Z)
+        print("Esto se decide a penales")
+        golesDePenalesX = 0
+        golesDePenalesZ = 0
+        while golesDePenalesX == golesDePenalesZ:
+            golesDePenalesX = random.randint(0,3)
+            golesDePenalesZ = random.randint(0,3)
+        print("Resultados de penales:")
+        print(X, golesDePenalesX, "-", golesDePenalesZ, Z)
+        if golesDePenalesX > golesDePenalesZ:
+            print("Ganó por penales el equipo", X)
+            ganador = X
+        else:
+            print("Ganó por penales el equipo", Z)
+            ganador = Z
+    else:
+        if golesX > golesZ:
+            ganador = X
+        else:
+            ganador = Z
+    return ganador
 
+equipo1 = "ingenieria Mecatronica"
+equipo2 = "ingenieria Ssistemas"
+equipo3 = "Biomedica"
+equipo4 = "Derecho"
 
-partidos = []
-while len(equipos) >= 2:
-    equipo1, equipo2 = random.sample(equipos, 2)
-    partidos.append((equipo1, equipo2))
-    equipos.remove(equipo1)
-    equipos.remove(equipo2)
+ResultadosSemifinal(equipo1, equipo2, equipo3, equipo4)
 
-
-print("Cuartos de final:")
-for partido in partidos:
-    print(partido[0], "vs", partido[1])
-
-
-ganadoresCuartosDeFinal = [random.choice(partido) for partido in partidos]
-print("\nEquipos que pasaron a semifinales:", ganadoresCuartosDeFinal)
-
-
-semifinales = []
-while len(ganadoresCuartosDeFinal) >= 2:
-    equipo1, equipo2 = random.sample(ganadoresCuartosDeFinal, 2)
-    semifinales.append((equipo1, equipo2))
-    ganadoresCuartosDeFinal.remove(equipo1)
-    ganadoresCuartosDeFinal.remove(equipo2)
-
-
-print("\nSemifinales:")
-for partido in semifinales:
-    print(partido[0], "vs", partido[1])
-
-
-ganadoresSemifinales = [random.choice(partido) for partido in semifinales]
-print("\nEquipos que pasaron a la final:", ganadoresSemifinales)
-
-
-print("\nFinal:")
-print(ganadoresSemifinales[0], "vs", ganadoresSemifinales[1])
-
-
-ganadorFinal = random.choice(ganadoresSemifinales)
-print("\nGanador del torneo:", ganadorFinal)
-
-
-perdedoresSemifinales = [partido for partido in semifinales if partido not in ((ganadoresSemifinales[0], ganadoresSemifinales[1]),)]
-print("\nEquipos que disputaron tercer lugar:", [x[0] for x in perdedoresSemifinales])
-
-
-print("\nPartido por tercer lugar:")
-print(perdedoresSemifinales[0][0], "vs", perdedoresSemifinales[1][0])
-
-
-ganadorTercerLugar = random.choice([perdedoresSemifinales[0][0], perdedoresSemifinales[1][0]])
-print("\nGanador del tercer lugar:", ganadorTercerLugar)
